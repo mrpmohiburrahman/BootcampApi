@@ -16,8 +16,10 @@ exports.register = async (req, res, next) => {
 
     //creating the user object and save to our mongo db
     const user = await User.create({ name, email, password, bio });
-
-    res.status(200).json({ success: true, user });
+    //get the token
+    const token=user.getSignedJwtToken
+    
+    res.status(200).json({ success: true, user, token  });
   } catch (error) {
     res.status(500).json({ success: false, msg: "Internal error!" });
     next(error);
