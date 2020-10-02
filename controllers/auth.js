@@ -27,5 +27,36 @@ exports.register = async (req, res, next) => {
 };
 
 exports.login = async (req, res, next) => {
-  console.log("login controller");
+  try {
+    const {email, password} = req.body
+    
+    if(!email || !password){
+      return res
+      .status(400)
+      .json({success:false, msg:'Please provide email and password'})
+    }
+    
+    const user = await User.findOne({email:email}).select('+password')
+
+    if(!user){
+      return res
+      .status(400)
+      .json({success:false, msg: 'Invalid credentials'})
+    }
+    
+    const isMatch = await user.matchPassword(password)
+
+    if(!isMatch){
+      return res
+      .status(400)
+      .json({success:false, msg:'Invalid credentials'})
+    }
+
+    const token=user.getSignedJwtToken()
+    res.status(200).json({success:true, user, token})
+
+  } catch (err) {
+    res. status(500).json({success:false, msg: 'Internal error!'})
+    next(err)
+  }
 };
