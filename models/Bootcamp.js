@@ -19,7 +19,6 @@ const BootcampSchema = new mongoose.Schema({
     },
     website:{
         type:String,
-        maxlength:[10,'Website address can not be longer than 10 characters'],
     },
     email:{
         type:String,
@@ -54,7 +53,7 @@ const BootcampSchema = new mongoose.Schema({
     user:{
         type:mongoose.Schema.ObjectId,
         ref:"User",
-        required:true,
+        // required:true,
     },
 })
 module.exports=mongoose.model('Bootcamp',BootcampSchema)
