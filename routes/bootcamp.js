@@ -63,4 +63,4 @@
 // module.exports=mongoose.model("Bootcamp",BootcampSchema)
 
 const express = require('express')
-const {}=require('../controllers/bootcamp')
+const {createBootcamp} =require('../controllers/bootcamp')
