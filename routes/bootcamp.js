@@ -64,7 +64,8 @@
 
 const express = require('express')
 const {createBootcamp} =require('../controllers/bootcamp')
+const {protect} = require('../middleware/auth')
 
 const router=express.Router()
-router.route("/").post(createBootcamp)
+router.route("/").post(protect, createBootcamp)
 module.exports=router
