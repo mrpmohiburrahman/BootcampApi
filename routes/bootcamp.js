@@ -63,9 +63,11 @@
 // module.exports=mongoose.model("Bootcamp",BootcampSchema)
 
 const express = require('express')
-const {createBootcamp} =require('../controllers/bootcamp')
+const {createBootcamp, getUserBootcamps, deleteBootcamp} =require('../controllers/bootcamp')
 const {protect} = require('../middleware/auth')
 
 const router=express.Router()
 router.route("/").post(protect, createBootcamp)
+router.route("/getUserBootcamps").get(protect,getUserBootcamps)
+router.route("/:id").delete(protect, deleteBootcamp)
 module.exports=router
