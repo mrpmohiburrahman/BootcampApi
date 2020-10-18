@@ -35,6 +35,16 @@ const BootcampSchema = new mongoose.Schema({
         type:[String],
         required:true,
     },
+    duration:{
+        type:Number,
+        min:1,
+        max:12,
+    },
+    price:{
+        type:Number,
+        min:0,
+        max:1000000000,
+    },
     isScholarship:{
         type:Boolean,
         default:false,
