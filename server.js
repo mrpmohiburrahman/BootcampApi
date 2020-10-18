@@ -4,6 +4,7 @@ const dotenv = require("dotenv");
 const morgan = require("morgan");
 const auth = require("./routes/auth");
 const bootcamp = require("./routes/bootcamp");
+const bootcampLogs = require("./routes/bootcampLogs");
 const connectDB = require("./config/db");
 
 // load the configs
@@ -23,6 +24,7 @@ if (process.env.NODE_ENV === "development") {
 // mount all routes
 app.use("/api/v1/auth", auth);
 app.use("/api/v1/bootcamps", bootcamp);
+app.use("/api/v1/bootcampLogs", bootcampLogs);
 
 const PORT = process.env.PORT || 5000;
 

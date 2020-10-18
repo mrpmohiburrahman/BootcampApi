@@ -42,3 +42,21 @@ exports.deleteBootcamp=async (req, res, next) =>{
         })
     }
 }
+
+exports.explore=async(req,res,next)=>{
+    try {
+        //1. user should not be able to explore his/her own bootcamp
+        const userId = req.user.id
+        const bootcamps = await Bootcamp.find({user:{ $ne:userId}}).populate("user")
+        
+        res.status(200).json({
+            success:true,
+            data:bootcamps,
+            total: bootcamps.length
+        })
+
+        //2. user should not be able to explore already viewed bootcamp
+    } catch (error) {
+        res.status(400).json({success:false})
+    }
+}
