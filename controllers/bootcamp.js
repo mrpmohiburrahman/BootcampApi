@@ -1,4 +1,5 @@
 const Bootcamp = require('../models/Bootcamp')
+const BootcampLogs = require('../models/BootcampLogs')
 
 exports.createBootcamp=async (req, res, next) =>{
     try {
@@ -58,5 +59,24 @@ exports.explore=async(req,res,next)=>{
         //2. user should not be able to explore already viewed bootcamp
     } catch (error) {
         res.status(400).json({success:false})
+    }
+}
+
+exports.getSavedBootcamps = async (req,res,next)=>{
+    try {
+        const userId=req.user.id
+        const bootcampLogs=await BootcampLogs.find({
+            user:userId,
+            status:"saved",
+        })
+        const bootcamps=await Bootcamp.find({
+            _id:{$in:bootcampLogs.map(({bootcamp})=>bootcamp)}
+        })
+
+        res.status(200).json({success:true,bootcamps})
+        console.log(bootcamps)
+    } catch (error) {
+        //res.status(400).json({success:false})
+        next(error)
     }
 }
