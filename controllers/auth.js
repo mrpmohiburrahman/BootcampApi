@@ -74,3 +74,19 @@ exports.getProfile=async(req,res, next)=>{
     
   }
 }
+
+exports.editProfile=async(req,res, next)=>{
+  const { name, bio } = req.body;
+  console.log("bio === ",bio)
+  console.log("name === ",name)
+
+  User.findOneAndUpdate({_id:req.user._id},{ $set: { bio: bio,name:name } },{new:true,useFindAndModify:false},(err,contact)=>{  
+    if(err){
+      res.send(err)
+    }
+    res.status(200).json({
+      success:true,
+      data:req.user,
+    })
+  })
+}
